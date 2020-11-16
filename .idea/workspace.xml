@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="2711ef36-e8f5-4122-93e5-2dde704d6c72" name="Default Changelist" comment="" />
+    <list default="true" id="2711ef36-e8f5-4122-93e5-2dde704d6c72" name="Default Changelist" comment="wip">
+      <change beforePath="$PROJECT_DIR$/resources/views/components/selectpicker.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/components/selectpicker.blade.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -12,6 +23,11 @@
     <execution />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="new_branch" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
@@ -162,18 +178,45 @@
       <updated>1605032278871</updated>
       <workItem from="1605032280434" duration="16706000" />
       <workItem from="1605193421800" duration="4066000" />
-      <workItem from="1605565217146" duration="32000" />
+      <workItem from="1605565217146" duration="349000" />
     </task>
+    <task id="LOCAL-00001" summary="wip">
+      <created>1605565503926</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1605565503926</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="wip" />
+    <option name="LAST_COMMIT_MESSAGE" value="wip" />
   </component>
   <component name="WindowStateProjectService">
     <state width="625" height="500" key="SwitcherDM" timestamp="1605300071991">
       <screen x="-2560" y="23" width="2560" height="1417" />
     </state>
     <state width="625" height="500" key="SwitcherDM/-2560.23.2560.1417/0.23.1792.1097@-2560.23.2560.1417" timestamp="1605300071991" />
+    <state x="-1780" y="408" key="Vcs.Push.Dialog.v2" timestamp="1605565576261">
+      <screen x="-2560" y="23" width="2560" height="1417" />
+    </state>
+    <state x="-1780" y="408" key="Vcs.Push.Dialog.v2/-2560.23.2560.1417/0.23.1792.1097@-2560.23.2560.1417" timestamp="1605565576261" />
     <state x="-1699" y="341" width="838" height="1032" key="search.everywhere.popup" timestamp="1605193451728">
       <screen x="-2560" y="23" width="2560" height="1417" />
     </state>
