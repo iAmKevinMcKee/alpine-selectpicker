@@ -4,9 +4,10 @@
         label="State"
         :options="$states"
         />
-    <x-selectpicker
-        wire:model="city"
-        label="City"
-        :options="$cities"
-    />
+{{--    <x-selectpicker--}}
+{{--        wire:model="city"--}}
+{{--        label="City"--}}
+{{--        :options="$cities"--}}
+{{--    />--}}
+
 </div>

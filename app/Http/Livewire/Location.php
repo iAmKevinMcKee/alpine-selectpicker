@@ -8,7 +8,7 @@ use Livewire\Component;
 
 class Location extends Component
 {
-    public $state = 1;
+    public $state;
     public $city;
     public $states;
     public $cities;
@@ -21,6 +21,7 @@ class Location extends Component
 
     public function updatedState($value)
     {
+//        dd('hi');
         $this->cities = State::findorfail($value)->cities->pluck('name', 'id');
     }
 
