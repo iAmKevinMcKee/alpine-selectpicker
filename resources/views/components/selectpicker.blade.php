@@ -12,14 +12,24 @@
             highlighted: '',
             options: {{ $options }},
             search: '',
-            open: false,
+            isOpen: false,
             filteredValues() {
+                console.log(Object.entries(this.options));
                 if(this.search) {
                     return Object.entries(this.options).filter(option => option[1].toLowerCase().includes(this.search.toLowerCase()));
                 }
                 return Object.entries(this.options);
             },
-            clickAway() { this.search = this.options[this.value]; this.open = false; }
+            clickAway() { this.search = this.options[this.value]; this.isOpen = false; },
+            open() {
+                this.isOpen = true;
+                if(! this.value) {
+                    this.highlighted = this.filteredValues()[0][0]
+                } else {
+                    this.highlighted = this.value;
+                }
+            },
+            close() { this.isOpen = false; this.highlighted = this.value; this.search = ''; blur(); }
         }"
         x-cloak
         x-init="
@@ -33,7 +43,7 @@
         <div x-text="value"></div>
         <div x-text="highlighted"></div>
         <div
-            x-on:click="open = true"
+            x-on:click="open()"
             x-on:click.away="clickAway()">
             <label for="{{\Illuminate\Support\Str::snake($label)}}" class="block text-sm font-medium leading-5 text-gray-700">{{$label}}</label>
             <div class="mt-1 relative rounded-md shadow-sm">
@@ -41,6 +51,8 @@
                     x-model="search"
                     wire:key="{{$attributes->wire('model')->value}}"
                     x-on:click="search = ''"
+                    x-on:keydown.enter="open()"
+                    x-on:keydown.escape="close()"
                     id="{{\Illuminate\Support\Str::snake($label)}}" class="form-input block w-full pr-10 sm:text-sm sm:leading-5" placeholder="{{$placeholder}}">
                 <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                     <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="none" stroke="currentColor">
@@ -61,7 +73,7 @@
             To: "opacity-0"
         -->
         <div
-            x-show="open"
+            x-show="isOpen"
             x-transition:leave="transition ease-in duration-50"
             x-transition:leave-start="opacity-100"
             x-transition:leave-end="opacity-0"
