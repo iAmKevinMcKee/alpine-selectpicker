@@ -14,13 +14,11 @@
             search: '',
             isOpen: false,
             filteredValues() {
-                console.log(Object.entries(this.options));
                 if(this.search) {
                     return Object.entries(this.options).filter(option => option[1].toLowerCase().includes(this.search.toLowerCase()));
                 }
                 return Object.entries(this.options);
             },
-            clickAway() { this.search = this.options[this.value]; this.isOpen = false; },
             open() {
                 this.isOpen = true;
                 if(! this.value) {
@@ -29,7 +27,34 @@
                     this.highlighted = this.value;
                 }
             },
-            close() { this.isOpen = false; this.highlighted = this.value; this.search = ''; blur(); }
+            close() {
+                this.isOpen = false;
+                this.highlighted = this.value;
+                this.search = this.options[this.value];
+                document.activeElement.blur(); // this needs to be updated
+            },
+            pressEnter() {
+                if(this.isOpen) {
+                    this.value = this.highlighted;
+                    this.close();
+                } else {
+                    this.open();
+                }
+            },
+            next() {
+                let index = this.filteredValues().findIndex(option => option[0] === this.highlighted);
+                if(index + 1 < this.filteredValues().length) {
+                    console.log(this.filteredValues()[index + 1][0]);
+                    this.highlighted = this.filteredValues()[index + 1][0];
+                    console.log(this.highlighted);
+                }
+            },
+            previous() {
+                let index = this.filteredValues().findIndex(option => option[0] === this.highlighted);
+                if(index !== 0) {
+                    this.highlighted = this.filteredValues()[index - 1][0];
+                }
+            }
         }"
         x-cloak
         x-init="
@@ -40,19 +65,21 @@
             });
         "
         class="relative space-y-1">
-        <div x-text="value"></div>
-        <div x-text="highlighted"></div>
+        Value: <span x-text="value"></span><br/>
+        Highlighted: <span x-text="highlighted"></span>
         <div
             x-on:click="open()"
-            x-on:click.away="clickAway()">
+            x-on:click.away="close()">
             <label for="{{\Illuminate\Support\Str::snake($label)}}" class="block text-sm font-medium leading-5 text-gray-700">{{$label}}</label>
             <div class="mt-1 relative rounded-md shadow-sm">
                 <input
                     x-model="search"
                     wire:key="{{$attributes->wire('model')->value}}"
                     x-on:click="search = ''"
-                    x-on:keydown.enter="open()"
+                    x-on:keydown.enter="pressEnter()"
                     x-on:keydown.escape="close()"
+                    x-on:keydown.arrow-down.prevent="next()"
+                    x-on:keydown.arrow-up.prevent="previous()"
                     id="{{\Illuminate\Support\Str::snake($label)}}" class="form-input block w-full pr-10 sm:text-sm sm:leading-5" placeholder="{{$placeholder}}">
                 <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                     <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="none" stroke="currentColor">
