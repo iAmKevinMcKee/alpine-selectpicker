@@ -30,7 +30,8 @@
             close() {
                 this.isOpen = false;
                 this.highlighted = this.value;
-                this.search = this.options[this.value];
+                if(this.value == null) { this.search = ''; }
+                else { this.search = this.options[this.value]; }
                 document.activeElement.blur(); // this needs to be updated
             },
             pressEnter() {
@@ -60,6 +61,9 @@
         x-init="
             search = options[value];
             highlighted = value;
+            if(value == null) {
+                search = '';
+            }
             $watch('value', () => {
                 search = options[value];
             });
