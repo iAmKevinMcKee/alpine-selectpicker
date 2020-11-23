@@ -1,10 +1,9 @@
 @props([
     'label' => 'Default',
     'placeholder' => 'Search...',
-])
+]);
 
-
-<div class="space-y-1">
+<div class="space-y-1" wire:ignore>
     <div
         x-data="{
             value: @entangle($attributes->wire('model')),
@@ -47,11 +46,10 @@
                 }
             },
             next() {
+                this.isOpen = true;
                 let index = this.filteredValues().findIndex(option => option[0] === this.highlighted);
                 if(index + 1 < this.filteredValues().length) {
-                    console.log(this.filteredValues()[index + 1][0]);
                     this.highlighted = this.filteredValues()[index + 1][0];
-                    console.log(this.highlighted);
                 }
             },
             previous() {
@@ -74,12 +72,17 @@
                 }
             });
             $watch('value', () => {
+                if(options[value]) {
                 search = options[value];
+                } else {
+                search = '';
+                }
+
+{{--                Without this workaround, for some reason a dependent selectpicker options do not update--}}
+                $wire.set('{{$attributes->wire('model')->value}}', value);
             });
         "
         class="relative space-y-1">
-        Value: <span x-text="value"></span><br/>
-        Highlighted: <span x-text="highlighted"></span>
         <div
             x-on:click="open()"
             x-on:click.away="close()">
@@ -103,17 +106,6 @@
                 </span>
             </div>
         </div>
-
-        <!--
-          Select popover, show/hide based on select state.
-
-          Entering: ""
-            From: ""
-            To: ""
-          Leaving: "transition ease-in duration-100"
-            From: "opacity-100"
-            To: "opacity-0"
-        -->
         <div
             x-show="isOpen"
             x-transition:leave="transition ease-in duration-50"
@@ -121,11 +113,6 @@
             x-transition:leave-end="opacity-0"
             class="absolute mt-1 w-full rounded-md bg-white shadow-lg z-10">
             <ul tabindex="-1" role="listbox" aria-labelledby="listbox-label" aria-activedescendant="listbox-item-3" class="text-gray-900 max-h-60 rounded-md py-1 text-base leading-6 shadow-xs overflow-auto focus:outline-none sm:text-sm sm:leading-5">
-                <!--
-                  Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
-
-                  Highlighted: "text-white bg-indigo-600", Not Highlighted: "text-gray-900"
-                -->
                 <template x-for="option in filteredValues()" :key="option[0]">
                     <li
                         x-on:click="value = option[0]"
@@ -134,18 +121,10 @@
                         id="listbox-option-0" role="option"
                         x-bind:class="{ 'text-white bg-indigo-600': highlighted === option[0]}"
                         class="cursor-default select-none relative py-2 pl-3 pr-9 focus:bg-indigo-600">
-                        <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
                         <span
                             x-text="option[1]"
                             x-bind:class="{ 'font-semibold': value === option[0]}" class="font-normal block truncate" >
                         </span>
-
-                        <!--
-                          Checkmark, only display for selected option.
-
-                          Highlighted: "text-white", Not Highlighted: "text-indigo-600"
-                        -->
-
                         <span
                             x-show="value === option[0]"
                             class="text-white absolute inset-y-0 right-0 flex items-center pr-4"
@@ -163,7 +142,6 @@
                     x-on:click.prevent="close()"
                     id="listbox-option-0" role="option"
                     class="cursor-default select-none relative py-2 pl-3 pr-9 focus:bg-indigo-600">
-                    <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
                     <span
                         x-text="'There are no results for &quot;' + search + '&quot;'"
                         class="font-normal block truncate" >

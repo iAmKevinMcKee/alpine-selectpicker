@@ -22,6 +22,9 @@ class Location extends Component
     public function updatedState($value)
     {
         $this->cities = State::findorfail($value)->cities->pluck('name', 'id');
+        if(! isset($this->cities[$this->city])) {
+            $this->city = null;
+        }
     }
 
     public function render()
