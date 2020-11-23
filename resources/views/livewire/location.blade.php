@@ -2,12 +2,12 @@
     <x-selectpicker
         wire:model="state"
         label="State"
-        :options="$states"
+        options="states"
         />
 {{--    <x-selectpicker--}}
 {{--        wire:model="city"--}}
 {{--        label="City"--}}
-{{--        :options="$cities"--}}
+{{--        options="cities"--}}
 {{--    />--}}
 
 </div>

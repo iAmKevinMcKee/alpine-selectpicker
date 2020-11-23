@@ -1,7 +1,6 @@
 @props([
     'label' => 'Default',
     'placeholder' => 'Search...',
-    'options' => null,
 ])
 
 
@@ -10,8 +9,14 @@
         x-data="{
             value: @entangle($attributes->wire('model')),
             highlighted: '',
-            options: {{ $options }},
+            options: @entangle($attributes['options']),
             search: '',
+            get searchValue() {
+                return this.search;
+            },
+            set searchValue(value) {
+                this.search = value;
+            },
             isOpen: false,
             filteredValues() {
                 if(this.search) {
@@ -21,7 +26,7 @@
             },
             open() {
                 this.isOpen = true;
-                if(! this.value) {
+                if(! this.value && this.filteredValues().length) {
                     this.highlighted = this.filteredValues()[0][0]
                 } else {
                     this.highlighted = this.value;
@@ -29,16 +34,15 @@
             },
             close() {
                 this.isOpen = false;
-                this.highlighted = this.value;
                 if(this.value == null) { this.search = ''; }
                 else { this.search = this.options[this.value]; }
-                document.activeElement.blur(); // this needs to be updated
             },
             pressEnter() {
                 if(this.isOpen) {
                     this.value = this.highlighted;
                     this.close();
                 } else {
+                    this.search = '';
                     this.open();
                 }
             },
@@ -64,6 +68,11 @@
             if(value == null) {
                 search = '';
             }
+            $watch('searchValue', () => {
+                if(document.activeElement === $refs.input) {
+                    open();
+                }
+            });
             $watch('value', () => {
                 search = options[value];
             });
@@ -77,13 +86,15 @@
             <label for="{{\Illuminate\Support\Str::snake($label)}}" class="block text-sm font-medium leading-5 text-gray-700">{{$label}}</label>
             <div class="mt-1 relative rounded-md shadow-sm">
                 <input
-                    x-model="search"
+                    x-ref="input"
+                    x-model="searchValue"
                     wire:key="{{$attributes->wire('model')->value}}"
                     x-on:click="search = ''"
                     x-on:keydown.enter="pressEnter()"
-                    x-on:keydown.escape="close()"
+                    x-on:keydown.escape="$refs.input.blur();"
                     x-on:keydown.arrow-down.prevent="next()"
                     x-on:keydown.arrow-up.prevent="previous()"
+                    x-on:blur="close()"
                     id="{{\Illuminate\Support\Str::snake($label)}}" class="form-input block w-full pr-10 sm:text-sm sm:leading-5" placeholder="{{$placeholder}}">
                 <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                     <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="none" stroke="currentColor">
@@ -118,6 +129,7 @@
                 <template x-for="option in filteredValues()" :key="option[0]">
                     <li
                         x-on:click="value = option[0]"
+                        x-on:mousedown.prevent=""
                         @mouseenter="highlighted = option[0]"
                         id="listbox-option-0" role="option"
                         x-bind:class="{ 'text-white bg-indigo-600': highlighted === option[0]}"
@@ -145,6 +157,18 @@
                         </span>
                     </li>
                 </template>
+                <li
+                    x-show="filteredValues().length === 0"
+                    x-on:mousedown.prevent=""
+                    x-on:click.prevent="close()"
+                    id="listbox-option-0" role="option"
+                    class="cursor-default select-none relative py-2 pl-3 pr-9 focus:bg-indigo-600">
+                    <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
+                    <span
+                        x-text="'There are no results for &quot;' + search + '&quot;'"
+                        class="font-normal block truncate" >
+                    </span>
+                </li>
             </ul>
         </div>
     </div>
