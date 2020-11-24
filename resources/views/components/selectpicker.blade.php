@@ -1,9 +1,9 @@
 @props([
     'label' => 'Default',
     'placeholder' => 'Search...',
-]);
+])
 
-<div class="space-y-1" wire:ignore>
+<div class="space-y-1">
     <div
         x-data="{
             value: @entangle($attributes->wire('model')),
