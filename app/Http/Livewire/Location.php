@@ -13,6 +13,15 @@ class Location extends Component
     public $states;
     public $cities;
 
+    public $rules = [
+        'state' => 'required',
+    ];
+
+    public function submit()
+    {
+        $this->validate();
+    }
+
     public function mount()
     {
         $this->states = State::all()->pluck('name', 'id');
