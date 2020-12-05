@@ -3,7 +3,7 @@
     'placeholder' => 'Search...',
 ])
 
-<div class="space-y-1">
+<div class="space-y-1" wire:ignore>
     <div
         x-data="{
             value: @entangle($attributes->wire('model')),
@@ -105,6 +105,9 @@
                     </svg>
                 </span>
             </div>
+        </div>
+        <div class="text-sm text-red-500">
+            Error
         </div>
         <div
             x-show="isOpen"

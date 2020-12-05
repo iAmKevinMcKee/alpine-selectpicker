@@ -27,6 +27,13 @@ class Location extends Component
         }
     }
 
+    public function submit()
+    {
+        dd($this->validate([
+           'state' => 'required',
+        ]));
+    }
+
     public function render()
     {
         return view('livewire.location');
