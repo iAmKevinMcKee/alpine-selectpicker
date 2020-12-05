@@ -8,6 +8,7 @@ use Livewire\Component;
 
 class Location extends Component
 {
+
     public $state;
     public $city;
     public $states;
@@ -22,6 +23,11 @@ class Location extends Component
         $this->validate();
     }
 
+    public function updated($value)
+    {
+        $this->resetErrorBag($value);
+    }
+
     public function mount()
     {
         $this->states = State::all()->pluck('name', 'id');
@@ -30,17 +36,12 @@ class Location extends Component
 
     public function updatedState($value)
     {
-        $this->cities = State::findorfail($value)->cities->pluck('name', 'id');
-        if(! isset($this->cities[$this->city])) {
+        if($value) {
+            $this->cities = State::findorfail($value)->cities->pluck('name', 'id');
+        }
+        if ( !isset($this->cities[$this->city])) {
             $this->city = null;
         }
-    }
-
-    public function submit()
-    {
-        dd($this->validate([
-           'state' => 'required',
-        ]));
     }
 
     public function render()

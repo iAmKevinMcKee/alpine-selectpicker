@@ -70,6 +70,7 @@
                 if(document.activeElement === $refs.input) {
                     open();
                 }
+                highlightFirstOption();
             });
             $watch('value', () => {
                 if(options[value]) {
@@ -77,10 +78,13 @@
                 } else {
                 search = '';
                 }
-
-{{--                Without this workaround, for some reason a dependent selectpicker options do not update--}}
-                $wire.set('{{$attributes->wire('model')->value}}', value);
             });
+            function highlightFirstOption(){
+                let options = Object.entries(filteredValues());
+                if(options.length > 0) {
+                    highlighted = options[0][1][0];
+                }
+            }
         "
         class="relative space-y-1">
         <div
@@ -93,7 +97,7 @@
                     x-model="searchValue"
                     wire:key="{{$attributes->wire('model')->value}}"
                     x-on:click="search = ''"
-                    x-on:keydown.enter="pressEnter()"
+                    x-on:keydown.enter.prevent="pressEnter()"
                     x-on:keydown.escape="$refs.input.blur();"
                     x-on:keydown.arrow-down.prevent="next()"
                     x-on:keydown.arrow-up.prevent="previous()"
@@ -105,6 +109,7 @@
                     @enderror
                         "
                     placeholder="{{$placeholder}}">
+                <span x-show="value !== null" x-on:click="value = null;" class="absolute inset-y-0 right-6 flex items-center pr-2 cursor-pointer text-gray-400 text-xs">Clear</span>
                 <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                     <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="none" stroke="currentColor">
                         <path d="M7 7l3-3 3 3m0 6l-3 3-3-3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
