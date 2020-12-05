@@ -10,12 +10,6 @@
             highlighted: '',
             options: @entangle($attributes['options']),
             search: '',
-            get searchValue() {
-                return this.search;
-            },
-            set searchValue(value) {
-                this.search = value;
-            },
             isOpen: false,
             filteredValues() {
                 if(this.search) {
@@ -66,7 +60,7 @@
             if(value == null) {
                 search = '';
             }
-            $watch('searchValue', () => {
+            $watch('search', () => {
                 if(document.activeElement === $refs.input) {
                     open();
                 }
@@ -94,7 +88,7 @@
             <div class="mt-1 relative rounded-md shadow-sm">
                 <input
                     x-ref="input"
-                    x-model="searchValue"
+                    x-model="search"
                     wire:key="{{$attributes->wire('model')->value}}"
                     x-on:click="search = ''"
                     x-on:keydown.enter.prevent="pressEnter()"
