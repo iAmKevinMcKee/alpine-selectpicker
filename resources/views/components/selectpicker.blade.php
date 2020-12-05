@@ -84,7 +84,7 @@
         <div
             x-on:click="open()"
             x-on:click.away="close()">
-            <label for="{{\Illuminate\Support\Str::snake($label)}}" class="block text-sm font-medium leading-5 text-gray-700">{{$label}}</label>
+            <label for="{{\Illuminate\Support\Str::snake($label)}}" class="block text-sm font-medium text-gray-700">{{$label}}</label>
             <div class="mt-1 relative rounded-md shadow-sm">
                 <input
                     x-ref="input"
@@ -105,8 +105,8 @@
                     placeholder="{{$placeholder}}">
                 <span x-show="value !== null" x-on:click="value = null;" class="absolute inset-y-0 right-6 flex items-center pr-2 cursor-pointer text-gray-400 text-xs">Clear</span>
                 <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                    <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="none" stroke="currentColor">
-                        <path d="M7 7l3-3 3 3m0 6l-3 3-3-3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
                     </svg>
                 </span>
             </div>
@@ -117,7 +117,7 @@
         <div
             wire:ignore
             x-show="isOpen"
-            x-transition:leave="transition ease-in duration-50"
+            x-transition:leave="transition ease-in duration-100"
             x-transition:leave-start="opacity-100"
             x-transition:leave-end="opacity-0"
             class="absolute mt-1 w-full rounded-md bg-white shadow-lg z-10">
