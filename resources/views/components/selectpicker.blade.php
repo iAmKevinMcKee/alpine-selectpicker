@@ -3,7 +3,7 @@
     'placeholder' => 'Search...',
 ])
 
-<div class="space-y-1" wire:ignore>
+<div class="space-y-1">
     <div
         x-data="{
             value: @entangle($attributes->wire('model')),
@@ -98,7 +98,13 @@
                     x-on:keydown.arrow-down.prevent="next()"
                     x-on:keydown.arrow-up.prevent="previous()"
                     x-on:blur="close()"
-                    id="{{\Illuminate\Support\Str::snake($label)}}" class="form-input block w-full pr-10 sm:text-sm sm:leading-5" placeholder="{{$placeholder}}">
+                    id="{{\Illuminate\Support\Str::snake($label)}}"
+                    class="form-input block w-full pr-10 sm:text-sm sm:leading-5
+                    @error($attributes->wire('model')->value)
+                        border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500
+                    @enderror
+                        "
+                    placeholder="{{$placeholder}}">
                 <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                     <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="none" stroke="currentColor">
                         <path d="M7 7l3-3 3 3m0 6l-3 3-3-3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -106,10 +112,11 @@
                 </span>
             </div>
         </div>
-        <div class="text-sm text-red-500">
-            Error
-        </div>
+        @error($attributes->wire('model')->value)
+        <p class="mt-2 text-sm text-red-600" id="email-error">{{$message}}</p>
+        @enderror
         <div
+            wire:ignore
             x-show="isOpen"
             x-transition:leave="transition ease-in duration-50"
             x-transition:leave-start="opacity-100"
