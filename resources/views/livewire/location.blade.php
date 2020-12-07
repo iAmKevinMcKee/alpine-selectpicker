@@ -10,6 +10,12 @@
             label="City"
             options="cities"
         />
+        <x-bladeselect
+            label="Second State"
+            name="my_name"
+            value="3"
+            :options="$states"
+            placeholder="Choose a State"/>
         <button type="submit">Click Me</button>
     </form>
 </div>
