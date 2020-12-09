@@ -32,12 +32,12 @@
             }
         },
         next() {
-                this.isOpen = true;
-                let index = this.objectOptions().findIndex(option => option[0] === this.highlighted);
-                if(index + 1 < this.objectOptions().length) {
-                    this.highlighted = this.objectOptions()[index + 1][0];
-                }
-            },
+            this.isOpen = true;
+            let index = this.objectOptions().findIndex(option => option[0] === this.highlighted);
+            if(index + 1 < this.objectOptions().length) {
+                this.highlighted = this.objectOptions()[index + 1][0];
+            }
+        },
         previous() {
             let index = this.objectOptions().findIndex(option => option[0] === this.highlighted);
             if(index !== 0) {
