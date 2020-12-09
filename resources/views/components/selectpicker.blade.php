@@ -97,7 +97,7 @@
                     x-on:keydown.arrow-up.prevent="previous()"
                     x-on:blur="close()"
                     id="{{\Illuminate\Support\Str::snake($label)}}"
-                    class="form-input block w-full pr-10 sm:text-sm sm:leading-5
+                    class="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm
                     @error($attributes->wire('model')->value)
                         border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500
                     @enderror
