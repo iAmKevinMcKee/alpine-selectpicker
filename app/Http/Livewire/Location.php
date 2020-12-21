@@ -11,8 +11,9 @@ class Location extends Component
 
     public $state;
     public $city;
-    public $states;
-    public $cities;
+    public $states = [];
+    public $cities = [];
+    public $cities2 = [];
 
     public $rules = [
         'state' => 'required',
@@ -38,6 +39,9 @@ class Location extends Component
     {
         if($value) {
             $this->cities = State::findorfail($value)->cities->pluck('name', 'id');
+        }
+        if($value == null) {
+            $this->city = null;
         }
         if ( !isset($this->cities[$this->city])) {
             $this->city = null;

@@ -10,6 +10,11 @@
             label="City"
             options="cities"
         />
+        <x-selectpicker-multiple
+            wire:model.defer="cities2"
+            label="Cities"
+            options="cities"
+            />
         <x-bladeselect
             label="Second State"
             name="my_name"
